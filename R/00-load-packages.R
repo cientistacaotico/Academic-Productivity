@@ -11,4 +11,7 @@ ipak <- function(pkg){
 
 ipak(c('GetLattesData',
        'dplyr',
-       'tidyr'))
+       'tidyr', 
+       'xml2',
+       'shiny'))
+

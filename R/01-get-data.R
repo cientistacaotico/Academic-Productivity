@@ -5,20 +5,15 @@
 # tempo de atuacao: a partir do mestrado
 # numero de artigos publicados: a partir do mestrado
 # numero de orientacoes
-# colaborações****
-# linhas de pesquisa
-# linha de pesquisa de formação
-# numero de projetos de extensao
 # visibilidade (exemplo: apresentacao de trabalho) conferencias
 # avaliar se docentes que publicam mais em ingles tem reconhecimento internacional por meio de conferencias (internacional)
 
 ### Universidade
 
-# colaboracao interna ou externa
 # tempo de vida do curso
 # localizacao geográfica com as publicacoes
-
 # Fazer avaliação posteriori se ter programa de pós ajuda
+
 # na produtividade dos professores. Atribuir pesos para 
 # cursos só com graduação; graduação e mestrado; graduação, mestrado e doutorado
 
@@ -34,7 +29,7 @@ for (m in 1:length(dir)) {
   num.row <- sum(n)
 }; rm(n)
 c.names <- c("universidade", "pais.origem", "bsc.inicio.ano", "bsc.fim.ano", "msc.inicio.year", "msc.fim.year", "phd.inicio.year", 
-             "phd.fim.year", "n.publicacao", "n.aceitos", "n.supervisoes", "n.conferencias")
+             "phd.fim.year", "n.publicacao", "n.aceitos", "n.supervisoes", "n.conferencias", "n.artigos.ingles")
 num.col <- length(c.names)
 
 df <- as.data.frame(matrix(ncol = num.col, nrow = num.row))
@@ -58,6 +53,7 @@ for (i in 1:length(dir)) {
       df[j,10] <- ifelse(is.null(dim(cv[[j]][["tpublic.accepted"]])[1]), NA, dim(cv[[j]][["tpublic.accepted"]])[1])
       df[j,11] <- ifelse(is.null(dim(cv[[j]][["tsupervisions"]])[1]), NA, dim(cv[[j]][["tsupervisions"]])[1])
       df[j,12] <- ifelse(is.null(dim(cv[[j]][["tconferences"]])[1]), NA, dim(cv[[j]][["tconferences"]])[1])
+      df[j,13] <- ifelse(is.null(table(cv[[j]][["tpublic.published"]][["language"]])[1]), NA, table(cv[[j]][["tpublic.published"]][["language"]])[1])
     }
   }
   if (i != 1) {
@@ -79,9 +75,9 @@ for (i in 1:length(dir)) {
       df[n+j,10] <- ifelse(is.null(dim(cv[[n+j]][["tpublic.accepted"]])[1]), NA, dim(cv[[n+j]][["tpublic.accepted"]])[1])
       df[n+j,11] <- ifelse(is.null(dim(cv[[n+j]][["tsupervisions"]])[1]), NA, dim(cv[[n+j]][["tsupervisions"]])[1])
       df[n+j,12] <- ifelse(is.null(dim(cv[[n+j]][["tconferences"]])[1]), NA, dim(cv[[n+j]][["tconferences"]])[1])
+      df[n+j,13] <- ifelse(is.null(table(cv[[n+j]][["tpublic.published"]][["language"]])[1]), NA, table(cv[[n+j]][["tpublic.published"]][["language"]])[1])
     }
   }
 }; rm(c.names,dir,end,files,folders,i,j,k,m,n,num.col,num.row)
 
-# coletar o número de artigos publicados e aceitos em lingua inglesa: usar table
 # coletar cv[[1]][["tconferences"]][["event.classification"]]
