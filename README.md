@@ -6,7 +6,7 @@ The main goal of this repository is to provide an evaluation of the academic pro
 
 - `Data/` have the cleaned data obtained from Lattes curriculum
 - `Figures` contains main figures results of the manuscript
-- `R`contains the workflow codes
+- `R` contains the workflow codes
 
 ## Analysis workflow
 
