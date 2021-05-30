@@ -29,7 +29,7 @@ for (m in 1:length(dir)) {
   num.row <- sum(n)
 }; rm(n)
 c.names <- c("universidade", "pais.origem", "bsc.inicio.ano", "bsc.fim.ano", "msc.inicio.year", "msc.fim.year", "phd.inicio.year", 
-             "phd.fim.year", "n.publicacao", "n.aceitos", "n.supervisoes", "n.conferencias", "n.artigos.ingles")
+             "phd.fim.year", "n.publicacao", "n.aceitos", "n.supervisoes", "n.conferencias", "n.artigos.ingles", "id")
 num.col <- length(c.names)
 
 df <- as.data.frame(matrix(ncol = num.col, nrow = num.row))
@@ -49,11 +49,12 @@ for (i in 1:length(dir)) {
       df[j,6] <- ifelse(is.null(cv[[j]][["tpesq"]][["msc.end.year"]]), NA, cv[[j]][["tpesq"]][["msc.end.year"]])
       df[j,7] <- ifelse(is.null(cv[[j]][["tpesq"]][["phd.start.year"]]), NA, cv[[j]][["tpesq"]][["phd.start.year"]])
       df[j,8] <- ifelse(is.null(cv[[j]][["tpesq"]][["phd.end.year"]]), NA, cv[[j]][["tpesq"]][["phd.end.year"]])
-      df[j,9] <- ifelse(is.null(dim(cv[[j]][["tpublic.published"]])[1]), NA, dim(cv[[j]][["tpublic.published"]])[1])
-      df[j,10] <- ifelse(is.null(dim(cv[[j]][["tpublic.accepted"]])[1]), NA, dim(cv[[j]][["tpublic.accepted"]])[1])
+      df[j,9] <- ifelse(dim(cv[[j]][["tpublic.published"]])[1] == 0, NA, sum(between(cv[[j]][["tpublic.published"]]$year, left = 2016, right = 2020)))
+      df[j,10] <- ifelse(dim(cv[[j]][["tpublic.accepted"]])[1] == 0, NA, sum(between(cv[[j]][["tpublic.accepted"]]$year, left = 2016, right = 2020)))
       df[j,11] <- ifelse(is.null(dim(cv[[j]][["tsupervisions"]])[1]), NA, dim(cv[[j]][["tsupervisions"]])[1])
       df[j,12] <- ifelse(is.null(dim(cv[[j]][["tconferences"]])[1]), NA, dim(cv[[j]][["tconferences"]])[1])
       df[j,13] <- ifelse(is.null(table(cv[[j]][["tpublic.published"]][["language"]])[1]), NA, table(cv[[j]][["tpublic.published"]][["language"]])[1])
+      df[j,14] <- cv[[j]][["tpesq"]][["id.file"]]
     }
   }
   if (i != 1) {
@@ -71,13 +72,14 @@ for (i in 1:length(dir)) {
       df[n+j,6] <- ifelse(is.null(cv[[n+j]][["tpesq"]][["msc.end.year"]]), NA, cv[[n+j]][["tpesq"]][["msc.end.year"]])
       df[n+j,7] <- ifelse(is.null(cv[[n+j]][["tpesq"]][["phd.start.year"]]), NA, cv[[n+j]][["tpesq"]][["phd.start.year"]])
       df[n+j,8] <- ifelse(is.null(cv[[n+j]][["tpesq"]][["phd.end.year"]]), NA, cv[[n+j]][["tpesq"]][["phd.end.year"]])
-      df[n+j,9] <- ifelse(is.null(dim(cv[[n+j]][["tpublic.published"]])[1]), NA, dim(cv[[n+j]][["tpublic.published"]])[1])
-      df[n+j,10] <- ifelse(is.null(dim(cv[[n+j]][["tpublic.accepted"]])[1]), NA, dim(cv[[n+j]][["tpublic.accepted"]])[1])
+      df[n+j,9] <- ifelse(dim(cv[[n+j]][["tpublic.published"]])[1] == 0, NA, sum(between(cv[[n+j]][["tpublic.published"]]$year, left = 2016, right = 2020)))
+      df[n+j,10] <- ifelse(dim(cv[[n+j]][["tpublic.accepted"]])[1] == 0, NA, sum(between(cv[[n+j]][["tpublic.accepted"]]$year, left = 2016, right = 2020)))
       df[n+j,11] <- ifelse(is.null(dim(cv[[n+j]][["tsupervisions"]])[1]), NA, dim(cv[[n+j]][["tsupervisions"]])[1])
       df[n+j,12] <- ifelse(is.null(dim(cv[[n+j]][["tconferences"]])[1]), NA, dim(cv[[n+j]][["tconferences"]])[1])
       df[n+j,13] <- ifelse(is.null(table(cv[[n+j]][["tpublic.published"]][["language"]])[1]), NA, table(cv[[n+j]][["tpublic.published"]][["language"]])[1])
+      df[n+j,14] <- cv[[n+j]][["tpesq"]][["id.file"]]
     }
   }
 }; rm(c.names,dir,end,files,folders,i,j,k,m,n,num.col,num.row)
 
-# coletar cv[[1]][["tconferences"]][["event.classification"]]
+# stringi::stri_sub(cv[[1]][["tpesq"]][["id.file"]], 17, to = 19)
